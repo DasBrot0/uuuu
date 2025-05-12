@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Feliz Día de la Madre</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #ffb6c1, #ffe4e1);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card {
+      position: relative;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+      padding: 30px;
+      max-width: 420px;
+      text-align: center;
+      z-index: 2;
+    }
+
+    h1 {
+      color: #e91e63;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 18px;
+      color: #444;
+    }
+
+    button {
+      margin-top: 20px;
+      background-color: #e91e63;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 30px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #d81b60;
+    }
+
+    .hearts {
+      margin-top: 20px;
+      font-size: 30px;
+      color: #e91e63;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .hearts.show {
+      opacity: 1;
+      animation: float 2s ease infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    /* MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.6);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 95%;
+      max-width: 800px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      position: relative;
+      animation: zoomIn 0.4s ease;
+    }
+
+    .modal-content img {
+      width: 100%;
+      max-height: 600px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .close {
+      color: #aaa;
+      font-size: 28px;
+      font-weight: bold;
+      position: absolute;
+      right: 20px;
+      top: 10px;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: #e91e63;
+    }
+
+    @keyframes zoomIn {
+      0% { opacity: 0; transform: scale(0.7); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* FLORES */
+    .flower {
+      position: absolute;
+      opacity: 0.8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .circle {
+      background-color: #ff69b4;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      position: absolute;
+    }
+
+    .petal {
+      background-color: #ff69b4;
+      border-radius: 50%;
+      width: 20px;
+      height: 40px;
+      position: absolute;
+    }
+
+    .petal1 { transform: rotate(0deg) translateY(40px); }
+    .petal2 { transform: rotate(60deg) translateY(40px); }
+    .petal3 { transform: rotate(120deg) translateY(40px); }
+    .petal4 { transform: rotate(180deg) translateY(40px); }
+    .petal5 { transform: rotate(240deg) translateY(40px); }
+    .petal6 { transform: rotate(300deg) translateY(40px); }
+
+    /* Confeti canvas solo dentro del modal */
+    .confeti-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      width: 100%;
+      height: 100%;
+      z-index: 5;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>💐 ¡Feliz Día de la Madre! 💐</h1>
+    <p>Mamá, gracias por tu amor infinito y tu paciencia inagotable. ¡Eres la mejor!</p>
+    <button onclick="openModal()">💖 Te quiero mucho 💖</button>
+    <div class="hearts" id="hearts">💗💗💗</div>
+  </div>
+
+  <!-- Modal -->
+  <div id="imageModal" class="modal">
+    <div class="modal-content">
+      <canvas id="confetiCanvas" class="confeti-canvas"></canvas>
+      <span class="close" onclick="closeModal()">&times;</span>
+      <img src="foto.jpg" alt="Imagen para Mamá">
+      <p style="margin-top: 15px; font-size: 20px;">🌸 ¡Te quiero mucho, Mamá! 🌸</p>
+    </div>
+  </div>
+
+  <!-- Música -->
+  <audio id="musica" src="musica.mp3" preload="auto"></audio>
+
+  <!-- Flores -->
+  <div id="flowers-container"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    function openModal() {
+      const modal = document.getElementById('imageModal');
+      modal.style.display = "block";
+
+      const content = modal.querySelector('.modal-content');
+      content.style.animation = "none";
+      void content.offsetWidth;
+      content.style.animation = "zoomIn 0.4s ease";
+
+      document.getElementById('hearts').classList.add('show');
+
+      const audio = document.getElementById('musica');
+      audio.currentTime = 0;
+      audio.play();
+
+      fireConfetti();
+    }
+
+    function closeModal() {
+      document.getElementById('imageModal').style.display = "none";
+      document.getElementById('hearts').classList.remove('show');
+
+      const audio = document.getElementById('musica');
+      audio.pause();
+      audio.currentTime = 0;
+    }
+
+    function fireConfetti() {
+      const canvas = document.getElementById('confetiCanvas');
+      const myConfetti = confetti.create(canvas, {
+        resize: true,
+        useWorker: true
+      });
+      myConfetti({
+        particleCount: 200,
+        spread: 80,
+        origin: { x: 0.5, y: 0.5 },
+        colors: ['#ff69b4', '#ff1493', '#ffa07a', '#ffb6c1']
+      });
+    }
+
+    function createFlowers() {
+      const container = document.getElementById('flowers-container');
+
+      // Posiciones predefinidas (más hacia la derecha)
+      const positions = [
+        { x: 30, y: 50 },
+        { x: 80, y: 250 },
+        { x: 250, y: 300 },
+        { x: 200, y: 550 },
+        { x: 100, y: 400 },
+        { x: 150, y: 100 },
+        { x: 280, y: 60 },
+        { x: 420, y: 150 },
+        { x: 520, y: 80 },
+        { x: 620, y: 200 },
+        { x: 750, y: 120 },
+        { x: 850, y: 250 },
+        { x: 500, y: 300 },
+        { x: 650, y: 360 },
+        { x: 780, y: 400 },
+        { x: 900, y: 450 },
+        { x: 400, y: 500 },
+        { x: 600, y: 550 },
+        { x: 720, y: 500 },
+        { x: 950, y: 100 },
+        { x: 1000, y: 220 },
+        { x: 1100, y: 80 },
+        { x: 1150, y: 300 },
+        { x: 1150, y: 475 },
+        { x: 1350, y: 175 },
+        { x: 1400, y: 400 },
+        { x: 1000, y: 600 },
+        { x: 1350, y: 550 },
+        { x: 1300, y: 25 },
+        { x: 1450, y: 50 },
+      ];
+
+      positions.forEach(pos => {
+        const flower = document.createElement('div');
+        flower.className = 'flower';
+        flower.style.left = `${pos.x}px`;
+        flower.style.top = `${pos.y}px`;
+
+        const circle = document.createElement('div');
+        circle.className = 'circle';
+        flower.appendChild(circle);
+
+        for (let j = 1; j <= 6; j++) {
+          const petal = document.createElement('div');
+          petal.className = `petal petal${j}`;
+          flower.appendChild(petal);
+        }
+
+        container.appendChild(flower);
+      });
+    }
+
+    window.onload = createFlowers;
+
+    window.onclick = function(event) {
+      const modal = document.getElementById('imageModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    }
+  </script>
+</body>
+</html>
