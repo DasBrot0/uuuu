@@ -2,21 +2,25 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Feliz Día de la Madre</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+    
     body {
       margin: 0;
+      padding: 10px;
       font-family: 'Segoe UI', sans-serif;
       display: flex;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
       background: linear-gradient(135deg, #ffb6c1, #ffe4e1);
-      overflow-x: hidden;
+      overflow: hidden;
       position: relative;
-      padding: 20px;
-      box-sizing: border-box;
+      touch-action: manipulation;
     }
 
     .card {
@@ -26,35 +30,36 @@
       box-shadow: 0 5px 20px rgba(0,0,0,0.2);
       padding: 20px;
       width: 100%;
-      max-width: 420px;
+      max-width: 95vw;
       text-align: center;
       z-index: 2;
     }
 
     h1 {
       color: #e91e63;
-      font-size: 24px;
+      font-size: 22px;
       margin-bottom: 10px;
     }
 
     p {
-      font-size: 16px;
+      font-size: 15px;
       color: #444;
-      line-height: 1.5;
+      line-height: 1.4;
+      margin-bottom: 15px;
     }
 
     button {
-      margin-top: 20px;
+      margin-top: 10px;
       background-color: #e91e63;
       color: white;
       border: none;
-      padding: 12px 20px;
+      padding: 10px 15px;
       border-radius: 30px;
-      font-size: 16px;
+      font-size: 15px;
       cursor: pointer;
       transition: background-color 0.3s ease;
       width: 100%;
-      max-width: 250px;
+      max-width: 200px;
     }
 
     button:hover {
@@ -62,8 +67,8 @@
     }
 
     .hearts {
-      margin-top: 15px;
-      font-size: 24px;
+      margin-top: 10px;
+      font-size: 20px;
       color: #e91e63;
       opacity: 0;
       transition: opacity 0.5s ease;
@@ -76,7 +81,7 @@
 
     @keyframes float {
       0% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
+      50% { transform: translateY(-8px); }
       100% { transform: translateY(0px); }
     }
 
@@ -91,6 +96,7 @@
       height: 100%;
       overflow: auto;
       background-color: rgba(0,0,0,0.6);
+      touch-action: manipulation;
     }
 
     .modal-content {
@@ -99,28 +105,31 @@
       padding: 15px;
       border-radius: 10px;
       width: 90%;
-      max-width: 500px;
+      max-width: 95vw;
+      max-height: 80vh;
       text-align: center;
       box-shadow: 0 5px 15px rgba(0,0,0,0.3);
       position: relative;
       animation: zoomIn 0.4s ease;
+      overflow: hidden;
     }
 
     .modal-content img {
       width: 100%;
       max-height: 60vh;
       object-fit: contain;
-      border-radius: 10px;
+      border-radius: 8px;
     }
 
     .close {
       color: #aaa;
-      font-size: 28px;
+      font-size: 24px;
       font-weight: bold;
       position: absolute;
-      right: 15px;
+      right: 12px;
       top: 5px;
       cursor: pointer;
+      z-index: 11;
     }
 
     .close:hover {
@@ -132,38 +141,39 @@
       100% { opacity: 1; transform: scale(1); }
     }
 
-    /* FLORES - Versión móvil */
+    /* FLORES - Optimizadas para Moto G54 */
     .flower {
       position: absolute;
-      opacity: 0.6;
+      opacity: 0.7;
       display: flex;
       justify-content: center;
       align-items: center;
       z-index: 1;
+      pointer-events: none;
     }
 
     .circle {
       background-color: #ff69b4;
       border-radius: 50%;
-      width: 20px;
-      height: 20px;
+      width: 16px;
+      height: 16px;
       position: absolute;
     }
 
     .petal {
       background-color: #ff69b4;
       border-radius: 50%;
-      width: 10px;
-      height: 20px;
+      width: 8px;
+      height: 16px;
       position: absolute;
     }
 
-    .petal1 { transform: rotate(0deg) translateY(20px); }
-    .petal2 { transform: rotate(60deg) translateY(20px); }
-    .petal3 { transform: rotate(120deg) translateY(20px); }
-    .petal4 { transform: rotate(180deg) translateY(20px); }
-    .petal5 { transform: rotate(240deg) translateY(20px); }
-    .petal6 { transform: rotate(300deg) translateY(20px); }
+    .petal1 { transform: rotate(0deg) translateY(16px); }
+    .petal2 { transform: rotate(60deg) translateY(16px); }
+    .petal3 { transform: rotate(120deg) translateY(16px); }
+    .petal4 { transform: rotate(180deg) translateY(16px); }
+    .petal5 { transform: rotate(240deg) translateY(16px); }
+    .petal6 { transform: rotate(300deg) translateY(16px); }
 
     /* Confeti canvas solo dentro del modal */
     .confeti-canvas {
@@ -179,7 +189,8 @@
     /* Media Queries para pantallas más grandes */
     @media (min-width: 768px) {
       .card {
-        padding: 30px;
+        padding: 25px;
+        max-width: 420px;
       }
       
       h1 {
@@ -190,37 +201,32 @@
         font-size: 18px;
       }
       
+      button {
+        padding: 12px 20px;
+        font-size: 16px;
+        max-width: 250px;
+      }
+      
       .flower {
         opacity: 0.8;
       }
       
       .circle {
-        width: 30px;
-        height: 30px;
+        width: 20px;
+        height: 20px;
       }
       
       .petal {
-        width: 15px;
-        height: 30px;
+        width: 10px;
+        height: 20px;
       }
       
-      .petal1 { transform: rotate(0deg) translateY(30px); }
-      .petal2 { transform: rotate(60deg) translateY(30px); }
-      .petal3 { transform: rotate(120deg) translateY(30px); }
-      .petal4 { transform: rotate(180deg) translateY(30px); }
-      .petal5 { transform: rotate(240deg) translateY(30px); }
-      .petal6 { transform: rotate(300deg) translateY(30px); }
-    }
-
-    @media (max-width: 480px) {
-      .hearts {
-        font-size: 20px;
-      }
-      
-      button {
-        padding: 10px 15px;
-        font-size: 14px;
-      }
+      .petal1 { transform: rotate(0deg) translateY(20px); }
+      .petal2 { transform: rotate(60deg) translateY(20px); }
+      .petal3 { transform: rotate(120deg) translateY(20px); }
+      .petal4 { transform: rotate(180deg) translateY(20px); }
+      .petal5 { transform: rotate(240deg) translateY(20px); }
+      .petal6 { transform: rotate(300deg) translateY(20px); }
     }
   </style>
 </head>
@@ -238,7 +244,7 @@
       <canvas id="confetiCanvas" class="confeti-canvas"></canvas>
       <span class="close" onclick="closeModal()">&times;</span>
       <img src="foto.jpg" alt="Imagen para Mamá">
-      <p style="margin-top: 15px; font-size: 18px;">🌸 ¡Te quiero mucho, Mamá! 🌸</p>
+      <p style="margin-top: 12px; font-size: 16px;">🌸 ¡Te quiero mucho, Mamá! 🌸</p>
     </div>
   </div>
 
@@ -285,8 +291,8 @@
         useWorker: true
       });
       myConfetti({
-        particleCount: 150,
-        spread: 70,
+        particleCount: 120,
+        spread: 60,
         origin: { x: 0.5, y: 0.5 },
         colors: ['#ff69b4', '#ff1493', '#ffa07a', '#ffb6c1']
       });
@@ -295,57 +301,31 @@
     function createFlowers() {
       const container = document.getElementById('flowers-container');
       const isMobile = window.innerWidth < 768;
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
 
-      // Posiciones fijas adaptadas para móvil
-      const positions = isMobile ? [
-        // Posiciones para móvil (coordenadas más pequeñas)
-        { x: 10, y: 50 },
-        { x: 30, y: 120 },
-        { x: 80, y: 200 },
-        { x: 20, y: 300 },
-        { x: 70, y: 400 },
-        { x: 40, y: 500 },
-        { x: 100, y: 100 },
-        { x: 150, y: 250 },
-        { x: 120, y: 350 },
-        { x: 180, y: 450 },
-        { x: 200, y: 150 },
-        { x: 250, y: 300 },
-        { x: 220, y: 400 },
-        { x: 280, y: 200 },
-        { x: 300, y: 350 }
-      ] : [
-        // Posiciones originales para desktop
-        { x: 30, y: 50 },
-        { x: 80, y: 250 },
-        { x: 250, y: 300 },
-        { x: 200, y: 550 },
-        { x: 100, y: 400 },
-        { x: 150, y: 100 },
-        { x: 280, y: 60 },
-        { x: 420, y: 150 },
-        { x: 520, y: 80 },
-        { x: 620, y: 200 },
-        { x: 750, y: 120 },
-        { x: 850, y: 250 },
-        { x: 500, y: 300 },
-        { x: 650, y: 360 },
-        { x: 780, y: 400 },
-        { x: 900, y: 450 },
-        { x: 400, y: 500 },
-        { x: 600, y: 550 },
-        { x: 720, y: 500 },
-        { x: 950, y: 100 },
-        { x: 1000, y: 220 },
-        { x: 1100, y: 80 },
-        { x: 1150, y: 300 },
-        { x: 1150, y: 475 },
-        { x: 1350, y: 175 },
-        { x: 1400, y: 400 },
-        { x: 1000, y: 600 },
-        { x: 1350, y: 550 },
-        { x: 1300, y: 25 },
-        { x: 1450, y: 50 },
+      // Posiciones específicamente calculadas para Moto G54 (1080px de ancho)
+      const positions = [
+        // Esquinas y bordes
+        { x: 5, y: 50 },
+        { x: screenWidth-25, y: 80 },
+        { x: 30, y: screenHeight-100 },
+        { x: screenWidth-40, y: screenHeight-150 },
+        
+        // Centro y áreas importantes
+        { x: screenWidth*0.25, y: screenHeight*0.3 },
+        { x: screenWidth*0.75, y: screenHeight*0.25 },
+        { x: screenWidth*0.15, y: screenHeight*0.6 },
+        { x: screenWidth*0.85, y: screenHeight*0.55 },
+        { x: screenWidth*0.5, y: screenHeight*0.15 },
+        { x: screenWidth*0.5, y: screenHeight*0.7 },
+        
+        // Posiciones adicionales para rellenar
+        { x: screenWidth*0.3, y: screenHeight*0.4 },
+        { x: screenWidth*0.7, y: screenHeight*0.35 },
+        { x: screenWidth*0.2, y: screenHeight*0.2 },
+        { x: screenWidth*0.8, y: screenHeight*0.8 },
+        { x: screenWidth*0.4, y: screenHeight*0.5 }
       ];
 
       positions.forEach(pos => {
@@ -381,6 +361,11 @@
         closeModal();
       }
     }
+    
+    // Prevenir zoom con doble toque
+    document.addEventListener('dblclick', function(e) {
+      e.preventDefault();
+    }, { passive: false });
   </script>
 </body>
 </html>
