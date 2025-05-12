@@ -11,10 +11,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      min-height: 100vh;
       background: linear-gradient(135deg, #ffb6c1, #ffe4e1);
-      overflow: hidden;
+      overflow-x: hidden;
       position: relative;
+      padding: 20px;
+      box-sizing: border-box;
     }
 
     .card {
@@ -22,7 +24,8 @@
       background: white;
       border-radius: 15px;
       box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-      padding: 30px;
+      padding: 20px;
+      width: 100%;
       max-width: 420px;
       text-align: center;
       z-index: 2;
@@ -30,13 +33,14 @@
 
     h1 {
       color: #e91e63;
-      font-size: 28px;
+      font-size: 24px;
       margin-bottom: 10px;
     }
 
     p {
-      font-size: 18px;
+      font-size: 16px;
       color: #444;
+      line-height: 1.5;
     }
 
     button {
@@ -49,6 +53,8 @@
       font-size: 16px;
       cursor: pointer;
       transition: background-color 0.3s ease;
+      width: 100%;
+      max-width: 250px;
     }
 
     button:hover {
@@ -56,8 +62,8 @@
     }
 
     .hearts {
-      margin-top: 20px;
-      font-size: 30px;
+      margin-top: 15px;
+      font-size: 24px;
       color: #e91e63;
       opacity: 0;
       transition: opacity 0.5s ease;
@@ -89,11 +95,11 @@
 
     .modal-content {
       background-color: #fff;
-      margin: 5% auto;
-      padding: 20px;
+      margin: 10% auto;
+      padding: 15px;
       border-radius: 10px;
-      width: 95%;
-      max-width: 800px;
+      width: 90%;
+      max-width: 500px;
       text-align: center;
       box-shadow: 0 5px 15px rgba(0,0,0,0.3);
       position: relative;
@@ -102,8 +108,8 @@
 
     .modal-content img {
       width: 100%;
-      max-height: 600px;
-      object-fit: cover;
+      max-height: 60vh;
+      object-fit: contain;
       border-radius: 10px;
     }
 
@@ -112,8 +118,8 @@
       font-size: 28px;
       font-weight: bold;
       position: absolute;
-      right: 20px;
-      top: 10px;
+      right: 15px;
+      top: 5px;
       cursor: pointer;
     }
 
@@ -126,37 +132,38 @@
       100% { opacity: 1; transform: scale(1); }
     }
 
-    /* FLORES */
+    /* FLORES - Versión móvil */
     .flower {
       position: absolute;
-      opacity: 0.8;
+      opacity: 0.6;
       display: flex;
       justify-content: center;
       align-items: center;
+      z-index: 1;
     }
 
     .circle {
       background-color: #ff69b4;
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
+      width: 20px;
+      height: 20px;
       position: absolute;
     }
 
     .petal {
       background-color: #ff69b4;
       border-radius: 50%;
-      width: 20px;
-      height: 40px;
+      width: 10px;
+      height: 20px;
       position: absolute;
     }
 
-    .petal1 { transform: rotate(0deg) translateY(40px); }
-    .petal2 { transform: rotate(60deg) translateY(40px); }
-    .petal3 { transform: rotate(120deg) translateY(40px); }
-    .petal4 { transform: rotate(180deg) translateY(40px); }
-    .petal5 { transform: rotate(240deg) translateY(40px); }
-    .petal6 { transform: rotate(300deg) translateY(40px); }
+    .petal1 { transform: rotate(0deg) translateY(20px); }
+    .petal2 { transform: rotate(60deg) translateY(20px); }
+    .petal3 { transform: rotate(120deg) translateY(20px); }
+    .petal4 { transform: rotate(180deg) translateY(20px); }
+    .petal5 { transform: rotate(240deg) translateY(20px); }
+    .petal6 { transform: rotate(300deg) translateY(20px); }
 
     /* Confeti canvas solo dentro del modal */
     .confeti-canvas {
@@ -167,6 +174,53 @@
       width: 100%;
       height: 100%;
       z-index: 5;
+    }
+
+    /* Media Queries para pantallas más grandes */
+    @media (min-width: 768px) {
+      .card {
+        padding: 30px;
+      }
+      
+      h1 {
+        font-size: 28px;
+      }
+      
+      p {
+        font-size: 18px;
+      }
+      
+      .flower {
+        opacity: 0.8;
+      }
+      
+      .circle {
+        width: 30px;
+        height: 30px;
+      }
+      
+      .petal {
+        width: 15px;
+        height: 30px;
+      }
+      
+      .petal1 { transform: rotate(0deg) translateY(30px); }
+      .petal2 { transform: rotate(60deg) translateY(30px); }
+      .petal3 { transform: rotate(120deg) translateY(30px); }
+      .petal4 { transform: rotate(180deg) translateY(30px); }
+      .petal5 { transform: rotate(240deg) translateY(30px); }
+      .petal6 { transform: rotate(300deg) translateY(30px); }
+    }
+
+    @media (max-width: 480px) {
+      .hearts {
+        font-size: 20px;
+      }
+      
+      button {
+        padding: 10px 15px;
+        font-size: 14px;
+      }
     }
   </style>
 </head>
@@ -184,7 +238,7 @@
       <canvas id="confetiCanvas" class="confeti-canvas"></canvas>
       <span class="close" onclick="closeModal()">&times;</span>
       <img src="foto.jpg" alt="Imagen para Mamá">
-      <p style="margin-top: 15px; font-size: 20px;">🌸 ¡Te quiero mucho, Mamá! 🌸</p>
+      <p style="margin-top: 15px; font-size: 18px;">🌸 ¡Te quiero mucho, Mamá! 🌸</p>
     </div>
   </div>
 
@@ -231,8 +285,8 @@
         useWorker: true
       });
       myConfetti({
-        particleCount: 200,
-        spread: 80,
+        particleCount: 150,
+        spread: 70,
         origin: { x: 0.5, y: 0.5 },
         colors: ['#ff69b4', '#ff1493', '#ffa07a', '#ffb6c1']
       });
@@ -240,9 +294,28 @@
 
     function createFlowers() {
       const container = document.getElementById('flowers-container');
+      const isMobile = window.innerWidth < 768;
 
-      // Posiciones predefinidas (más hacia la derecha)
-      const positions = [
+      // Posiciones fijas adaptadas para móvil
+      const positions = isMobile ? [
+        // Posiciones para móvil (coordenadas más pequeñas)
+        { x: 10, y: 50 },
+        { x: 30, y: 120 },
+        { x: 80, y: 200 },
+        { x: 20, y: 300 },
+        { x: 70, y: 400 },
+        { x: 40, y: 500 },
+        { x: 100, y: 100 },
+        { x: 150, y: 250 },
+        { x: 120, y: 350 },
+        { x: 180, y: 450 },
+        { x: 200, y: 150 },
+        { x: 250, y: 300 },
+        { x: 220, y: 400 },
+        { x: 280, y: 200 },
+        { x: 300, y: 350 }
+      ] : [
+        // Posiciones originales para desktop
         { x: 30, y: 50 },
         { x: 80, y: 250 },
         { x: 250, y: 300 },
@@ -295,7 +368,12 @@
       });
     }
 
-    window.onload = createFlowers;
+    window.addEventListener('DOMContentLoaded', createFlowers);
+    window.addEventListener('resize', function() {
+      // Recrear flores al cambiar el tamaño de la ventana
+      document.getElementById('flowers-container').innerHTML = '';
+      createFlowers();
+    });
 
     window.onclick = function(event) {
       const modal = document.getElementById('imageModal');
